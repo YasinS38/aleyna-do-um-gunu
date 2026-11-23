@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5e9dc" />
+  <title>İyi ki Doğdun, Aşkım ♡</title>
+  <style>
+    :root {
+      --cream: #f5e9dc;
+      --cream-light: #fff8f1;
+      --rose: #d8a6a0;
+      --rose-deep: #b77770;
+      --brown: #80604e;
+      --brown-dark: #5d4437;
+      --shadow: 0 18px 45px rgba(93, 68, 55, .12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--brown-dark);
+      background: radial-gradient(circle at top, #fff8f1 0, var(--cream) 55%, #ecd8c8 100%);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    button { font: inherit; }
+    .page { width: min(900px, 100%); margin: auto; padding: 28px 18px 70px; }
+    .hero { text-align: center; padding: 24px 0 34px; animation: fadeUp .9s ease both; }
+    .hero-photo {
+      width: min(210px, 62vw); aspect-ratio: 4 / 5; object-fit: cover;
+      border-radius: 22px; border: 7px solid rgba(255,255,255,.75);
+      box-shadow: var(--shadow); display: block; margin: 0 auto 24px;
+    }
+    .eyebrow { letter-spacing: .16em; text-transform: uppercase; font-size: .75rem; color: var(--rose-deep); }
+    h1 { font-size: clamp(2rem, 7vw, 3.6rem); font-weight: normal; line-height: 1.15; margin: 12px 0; color: var(--brown); }
+    .hero-sub { color: #9b7561; font-size: 1rem; }
+    .heart { color: var(--rose-deep); }
+    .section { margin: 22px 0 34px; }
+    .section-title { text-align: center; font-size: clamp(1.4rem, 4vw, 2rem); font-weight: normal; margin: 0 0 20px; color: var(--brown); }
+    .gallery { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    .photo-card { margin: 0; background: rgba(255,255,255,.65); padding: 10px 10px 15px; border-radius: 18px; box-shadow: 0 9px 24px rgba(93,68,55,.08); transition: transform .25s ease; }
+    .photo-card:hover { transform: translateY(-4px); }
+    .photo-card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; border-radius: 12px; cursor: zoom-in; }
+    .photo-card figcaption { text-align: center; color: var(--brown); line-height: 1.5; padding: 12px 5px 0; font-size: .97rem; }
+    .letter-section { background: rgba(255,248,241,.75); border: 1px solid rgba(183,119,112,.25); border-radius: 24px; padding: clamp(22px, 5vw, 38px); box-shadow: var(--shadow); }
+    .letter-section p { font-size: 1.05rem; line-height: 1.85; margin: 0 0 16px; }
+    .letter-section p:last-child { margin-bottom: 0; }
+    .letter-section .signoff { text-align: center; color: var(--rose-deep); font-style: italic; padding-top: 8px; }
+    .thankyou-wrap { text-align: center; margin: 38px 0 20px; }
+    .thankyou-btn {
+      border: 1px solid #c98e87; background: linear-gradient(135deg, #fff7ef, #f0d9d2);
+      color: var(--brown); border-radius: 999px; padding: 15px 24px; cursor: pointer;
+      box-shadow: 0 10px 24px rgba(93,68,55,.10); transition: transform .2s, box-shadow .2s;
+    }
+    .thankyou-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(93,68,55,.16); }
+    .thankyou-hint { font-size: .86rem; color: #9b7561; margin-top: 11px; }
+    footer { text-align: center; color: #a17b68; font-size: .85rem; margin-top: 45px; }
+    .modal, .lightbox { display: none; position: fixed; inset: 0; z-index: 10; background: rgba(45,30,24,.65); padding: 18px; align-items: center; justify-content: center; }
+    .modal.show, .lightbox.show { display: flex; animation: fadeIn .25s ease; }
+    .modal-card { width: min(680px, 100%); max-height: 90vh; overflow: auto; background: var(--cream-light); border-radius: 24px; padding: clamp(22px, 5vw, 38px); position: relative; box-shadow: 0 25px 70px rgba(0,0,0,.2); animation: fadeUp .35s ease; }
+    .modal-card h2 { font-weight: normal; color: var(--brown); text-align: center; margin: 0 0 24px; font-size: 1.7rem; }
+    .modal-card p { line-height: 1.9; font-size: 1.04rem; }
+    .close { position: absolute; top: 12px; right: 15px; border: 0; background: transparent; color: var(--brown); font-size: 1.8rem; cursor: pointer; line-height: 1; padding: 5px; }
+    .lightbox img { max-width: 95vw; max-height: 90vh; object-fit: contain; border-radius: 14px; box-shadow: 0 20px 60px rgba(0,0,0,.4); }
+    .lightbox .close { color: white; position: fixed; top: 12px; right: 18px; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @media (min-width: 700px) { .gallery { gap: 22px; } .page { padding-top: 45px; } }
+    @media (max-width: 420px) { .page { padding-left: 13px; padding-right: 13px; } .gallery { gap: 10px; } .photo-card { padding: 7px 7px 12px; } .photo-card figcaption { font-size: .88rem; } }
+.creator-signature {
+  position: fixed;
+  bottom: 12px;
+  left: 15px;
+  font-size: 12px;
+  color: #80604E;
+  opacity: 0.7;
+  z-index: 10;
+}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <!-- Kendi açılış fotoğrafınızı hero.jpg adıyla ekleyin -->
+      <img class="hero-photo" src="hero.jpg" alt="Birlikte güzel bir anımız" onerror="this.style.display='none'">
+      <div class="eyebrow">25 Kasım 2026</div>
+      <h1>İyi ki doğdun,<br><span class="heart">aşkım ♡</span></h1>
+      <p class="hero-sub">Bugün senin, hayallerinin ve bizim güzel hikâyemizin günü.</p>
+    </header>
+
+    <section class="section" aria-label="Fotoğraf galerisi">
+      <h2 class="section-title">Birlikte biriktirdiğimiz anlar <span class="heart">♡</span></h2>
+      <div class="gallery">
+        <figure class="photo-card">
+          <img src="photo1.jpg" alt="Birlikte çekilmiş fotoğraf 1" onclick="openPhoto(this)" onerror="this.style.display='none'">
+          <figcaption>Yanında olduğum, gülüşünü gördüğüm o güzel gün.</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <img src="photo2.jpg" alt="Birlikte çekilmiş fotoğraf 2" onclick="openPhoto(this)" onerror="this.style.display='none'">
+          <figcaption>Birlikte yürüdüğümüz, hayallerinden bir adım daha attığın gün.</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <img src="photo3.jpg" alt="Birlikte çekilmiş fotoğraf 3" onclick="openPhoto(this)" onerror="this.style.display='none'">
+          <figcaption>Başardığın, kendinle gurur duyduğun o an.</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <img src="photo4.jpg" alt="Birlikte çekilmiş fotoğraf 4" onclick="openPhoto(this)" onerror="this.style.display='none'">
+          <figcaption>Yan yana, sessizce mutlu olduğumuz bir fotoğraf.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section letter-section">
+      <h2 class="section-title">Seninle gurur duyuyorum <span class="heart">♡</span></h2>
+      <p>Bugün senin doğum günün ama benim kutlamak istediğim şey yalnızca dünyaya gelişin değil, bu yıl hayatında başardığın o güzel şeyler de.</p>
+      <p>Bu sene hayallerine doğru bir adım daha attın, üniversiteye başladın. Belki önünde zaman zaman yorulacağın, belki zorlanacağın günler olacak ama bugün geldiğin noktaya bakınca seninle ne kadar gurur duyduğumu anlatmak istiyorum.</p>
+      <p>Ben o hayallerini kurduğun zamanları da biliyorum ve bugün o hayallerin için adım attığını görmek bana tarifsiz bir mutluluk veriyor. Senin mutluluğun, senin başarın ve güzel şeyler yaşaman benim için de çok kıymetli; çünkü ben seni sadece güzel günlerinde değil, hayatın her döneminde sevmek istiyorum.</p>
+      <p>Ben o yolun başında da yanındaydım, bugün de senin yanındayım ve ileride ulaşacağın daha nice güzel şeyleri görmek istiyorum. Umarım üniversite hayatın sana sadece başarı değil, güzel dostluklar, unutulmaz anılar ve kendini keşfedeceğin nice güzel günler getirir.</p>
+      <p>Hiçbir zaman kendinden şüphe etme aşkım. Sen düşündüğünden çok daha güçlü, çok daha güzel şeyleri başarabilecek birisin ve ben senin başardıklarını gördükçe içten içe hep gurur duyacağım.</p>
+      <p>Seni çok seviyorum sevgilim. Bazen bunu kelimelerle anlatmak ne kadar zor olsa da hayatımda olduğun için ne kadar mutlu olduğumu bilmeni istiyorum. Seninle kurduğum hayaller, seninle yaşadığım anlar ve senin o güzel kalbin benim için çok değerli.</p>
+      <p>İyi ki doğdun aşkım. İyi ki hayatımdasın ve iyi ki hayallerine doğru yürüyen o güzel kalbinle varsın. Bugün senin günün ve umarım hayat sana kalbin kadar güzel günler yaşatır. Seni çok seviyorum. <span class="heart">♥</span></p>
+    </section>
+
+    <section class="thankyou-wrap">
+      <button class="thankyou-btn" onclick="openLetter()">♡ Sana bir teşekkürüm var ♡</button>
+      <div class="thankyou-hint">Dokun ve sana söylemek istediğim birkaç şeyi oku</div>
+    </section>
+
+    <footer>Seninle, her şey daha güzel. ♡</footer>
+  </main>
+
+  <div class="modal" id="letterModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="outsideClose(event)">
+    <article class="modal-card">
+      <button class="close" aria-label="Mektubu kapat" onclick="closeLetter()">×</button>
+      <h2 id="modalTitle">Sana bir teşekkürüm var ♡</h2>
+      <p>İyi ki doğdun. Varlığınla hayatıma umut, neşe ve sakinlik kattın. Zor zamanlarımda bile bana yaslanacak bir omuz oldun. Bazen sadece sessizce yanımda durdun, bazen bir cümlenle içimi rahatlattın.</p>
+      <p>Beni olduğum halimle kabul ettiğin için, eksiklerime değil kalbime baktığın için, sana ne kadar teşekkür etsem az. Özellikle hayatımın zorlaştığı, kendimi çaresiz hissettiğim zamanlarda bana hem maddi hem manevi destek olman, yanımda olduğunu hissettirmem çok şeyi değiştirdi. O günlerde elimi bırakmadın; bunu hiçbir zaman unutmayacağım.</p>
+      <p>Belki her zaman istediğim gibi karşılık veremedim, belki sana ne kadar minnettar olduğumu yeterince anlatamadım ama bilmeni istiyorum ki yaptığın her şeyi kalbimde taşıyorum. Sen benim için yalnızca sevgilim değil, en zor anlarımda bile iyi ki hayatımda dediğim insansın.</p>
+      <p>İyi ki varsın, iyi ki doğdun. Seni çok seviyorum aşkım. <span class="heart">♥</span></p>
+    </article>
+  </div>
+
+  <div class="lightbox" id="photoLightbox" onclick="closePhoto()">
+    <button class="close" aria-label="Fotoğrafı kapat">×</button>
+    <img id="lightboxImage" alt="Büyütülmüş fotoğraf">
+  </div>
+
+  <script>
+    const letterModal = document.getElementById('letterModal');
+    const photoLightbox = document.getElementById('photoLightbox');
+    function openLetter() { letterModal.classList.add('show'); document.body.style.overflow = 'hidden'; }
+    function closeLetter() { letterModal.classList.remove('show'); document.body.style.overflow = ''; }
+    function outsideClose(event) { if (event.target === letterModal) closeLetter(); }
+    function openPhoto(img) {
+      const box = document.getElementById('lightboxImage');
+      box.src = img.src; box.alt = img.alt;
+      photoLightbox.classList.add('show'); document.body.style.overflow = 'hidden';
+    }
+    function closePhoto() { photoLightbox.classList.remove('show'); document.body.style.overflow = ''; }
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') { closeLetter(); closePhoto(); }
+    });
+  </script>
+<div class="creator-signature">
+  Hazırlayan Yasin Şahin
+</div>
+</body>
+</html>
